@@ -3,7 +3,17 @@
 use dubble::DoubleBuffered;
 
 pub fn solution_disappearing_pairs_optimized(s: &[u8]) -> Vec<u8> {
-    solution_disappearing_pairs_inefficient(s)
+    let mut result : Vec<u8> = vec!();
+
+    for value in s {
+        if result.len() > 0 && result[result.len()-1] == *value {
+            result.pop();
+        } else {
+            result.push(*value);
+        }
+    }
+
+    result
 }
 
 #[allow(unused_variables)]
@@ -11,7 +21,6 @@ pub fn solution_disappearing_pairs_optimized(s: &[u8]) -> Vec<u8> {
 #[allow(unreachable_code)]
 pub fn solution_disappearing_pairs_inefficient(s: &[u8]) -> Vec<u8> {
 
-    // Lambda
     fn met(buffer : & mut DoubleBuffered<Vec<u8>>, occurence: u8) {
         let mut i = 0;
 
@@ -72,5 +81,9 @@ fn main() {
     assert_eq!(solution_disappearing_pairs(b"BABABA"), b"BABABA");
     assert_eq!(solution_disappearing_pairs(b"ACCAABBC"), b"AC");
     assert_eq!(solution_disappearing_pairs(b"ACCAAAABBC"), b"AC");
+    assert_eq!(solution_disappearing_pairs(b"ACCAAAABBCC"), b"A");
+    assert_eq!(solution_disappearing_pairs(b"ACCAAAABBCCCC"), b"A");
+    assert_eq!(solution_disappearing_pairs(b"ACCAAAABBCCCCB"), b"AB");
     assert_eq!(solution_disappearing_pairs(b"ACCAAAABBBBBBBBBBC"), b"AC");
+    assert_eq!(solution_disappearing_pairs(b"AAACCAAAABBBBBBBBBBC"), b"AC");
 }
