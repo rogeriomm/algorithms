@@ -6,8 +6,13 @@ pub fn solution_disappearing_pairs_optimized(s: &[u8]) -> Vec<u8> {
     let mut result : Vec<u8> = vec!();
 
     for value in s {
-        if result.len() > 0 && result[result.len()-1] == *value {
-            result.pop();
+        if let Some(vlast) = result.last() {
+            if *vlast == *value {
+                result.pop();
+            }
+            else {
+                result.push(*value);
+            }
         } else {
             result.push(*value);
         }
